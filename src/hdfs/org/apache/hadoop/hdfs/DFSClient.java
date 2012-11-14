@@ -63,6 +63,7 @@ import java.nio.ByteBuffer;
 import javax.net.SocketFactory;
 
 import sun.net.util.IPAddressUtil;
+import sun.util.LocaleServiceProviderPool;
 
 /********************************************************
  * DFSClient can connect to a Hadoop Filesystem and 
@@ -2968,6 +2969,7 @@ public class DFSClient implements FSConstants, java.io.Closeable {
               timeout = timeout <= 0 ? 1000 : timeout;
 
               try {
+                LOG.warn("*** Sleeping for ms="+timeout+", timeoutValue="+timeoutValue);
                 dataQueue.wait(timeout);
                 now = System.currentTimeMillis();
               } catch (InterruptedException  e) {
