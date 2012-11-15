@@ -185,9 +185,11 @@ public class DFSClient implements FSConstants, java.io.Closeable {
     UserGroupInformation ticket = UserGroupInformation
         .createRemoteUser(block.toString());
     ticket.addToken(token);
-    return (ClientDatanodeProtocol)RPC.getProxy(ClientDatanodeProtocol.class,
+
+
+      return (ClientDatanodeProtocol)RPC.getProxy(ClientDatanodeProtocol.class,
         ClientDatanodeProtocol.versionID, addr, ticket, conf, NetUtils
-        .getDefaultSocketFactory(conf), socketTimeout);
+        .getDefaultSocketFactory(conf), socketTimeout, RetryPolicies.TRY_ONCE_THEN_FAIL);
   }
         
   /** Create {@link ClientDatanodeProtocol} proxy using kerberos ticket */
